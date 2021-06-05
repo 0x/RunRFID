@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 project(RunRFID)
 
 find_package(PkgConfig REQUIRED) 
-#find_library()
 
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
