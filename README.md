@@ -13,4 +13,4 @@
 
 ### libserialport
 https://sigrok.org/api/libserialport/unstable/index.html
-- Just install from apt: ```apt install libserialport```
+- Just install from apt: ```sudo apt install libserialport``` or ```sudo apt install libserialport-dev```
