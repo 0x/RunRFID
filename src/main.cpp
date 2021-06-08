@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <array>
 
 #define BAUD 9600
 
@@ -30,6 +31,7 @@ int main(int argc, char *argv[]) {
 
   // read data and write to file
   std::fstream otputFile;
+  std::array<int, 31> tag;
   int i = 0;
   while (true) {
     int waiting;
@@ -40,18 +42,20 @@ int main(int argc, char *argv[]) {
     // sort of inefficient -- could read a bunch of bytes at once
     // could even block for all of them at once
     sp_nonblocking_read(port, (void *)&c, 1);
+    tag[i] = c;
     if (i % 30 == 0) {
       putchar('\n');
+      otputFile.open("RFIDData.txt",
+                   std::ios::out | std::ios::binary | std::ios::trunc);
+      if (otputFile.is_open()) {
+        for (const auto el: tag)
+          otputFile << std::hex << el;
+      otputFile.close();
+      }
       i = 0;
     }
     printf("%02X ", c);
 
-    otputFile.open("RFIDData.txt",
-                   std::ios::out | std::ios::binary | std::ios::trunc);
-    if (otputFile.is_open()) {
-      otputFile << c;
-      otputFile.close();
-    }
     ++i;
   }
 
